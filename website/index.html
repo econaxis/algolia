@@ -12,15 +12,21 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap" rel="stylesheet">
-	<script src="index.js"></script>
+	
 </head>
-<body onload="writeBg()">
+<body>
 	<!-- <script src="loadBackground.js"></script> -- -->
 	<div id="bg-container"><div id="background"></div></div>
 	<div id = "main-container" class="">
 		<div id="left">
-			<div class="body light">
-				some promo
+			<div id = "links" class="body light">
+				<div class = "link">
+				Find us on github!
+				</div>
+				
+				<div class = "link">
+				Self-promotion
+				</div>
 			</div>
 			
 			<div id="main-search">
@@ -28,7 +34,7 @@
 					Look into old news —
 				</div>
 				<div class="heading light">
-					Just don't copy it into your paper
+					Just don't plagarize
 				</div>
 				<div id="searchbox"></div>
 			</div>
@@ -46,4 +52,5 @@
 <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.8.3/dist/instantsearch.production.min.js"
         integrity="sha256-LAGhRRdtVoD6RLo2qDQsU2mp+XVSciKRC8XPOBWmofM=" crossorigin="anonymous"></script>
 <script src="startAlgolia.js"></script>
+<script src="index.js"></script>
 </html>

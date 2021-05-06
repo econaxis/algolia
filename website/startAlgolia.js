@@ -16,16 +16,23 @@ search.addWidgets([
     instantsearch.widgets.hits({
         container: '#hits',
         templates: {
+			empty(results){
+				return 	`Whoops! Can't find anything for <q>{{ query }}</q> :(`
+			},
             item(hit) {
-                console.log(hit);
+                console.log(hit.title);
+                console.log(hit.byline);
 
                 const snippets = hit._snippetResult.plain_text.filter((el1) => {
                     return el1.matchLevel === "full";
                 })
                 if (snippets === []) return null;
-                return `<h3>${JSON.stringify(snippets)}</h3>`
+                return `<div class="heading light">`+hit.title+`</div>`
             }
-        }
+        },
+		cssClasses: {
+			item: "list-item",
+		},
     })
 ]);
 search.start();

@@ -7,12 +7,12 @@ var words = [
 var colors = ["#393E46", "#FFD369"];
 var fontStyles = ["", "italic", "bold"];
 
-function writeBg(){
+
 var bg = document.getElementById("background");
 for (var i = 0; i < words.length; i++) {
 	bg.appendChild(makeText(words[i].text, words[i].count));
 }
-}
+
 
 function makeText(text, size) {
 	var wordContainer = document.createElement("div");
@@ -34,61 +34,67 @@ function makeText(text, size) {
 		} else if (text == "The Guardian") {
 			clickSearch("theguardian.com");
 		} else {
-		clickSearch(text)
+			clickSearch(text)
 		}
 	}, false);
 	
 	return wordContainer;
 }
-var eventFocusIn = new CustomEvent("focusin");
 
 function clickSearch(s){
 	var searchBox = document.querySelectorAll('.ais-SearchBox-input')[0];
 	searchBox.value = s;
-	searchBox.dispatchEvent(eventFocusIn);
+	document.getElementById("right").classList.remove("hidden");
+	bg.style.opacity = "0.2";
+	bg.style.filter = "blur(5px)";
 	index.search(s).then(({ hits }) => {
-	console.log(hits)}); //yo idk how to make this appear on the UI
+		var hitBoxes = document.getElementsByClassName("ais-Hits-item");
+		for(var i = 0; i < hits.length; i++){
+			const snippets = hits[i]._snippetResult.plain_text.filter((el1) => {
+                    return el1.matchLevel === "full";
+                })
+			hitBoxes[i].innerHTML = `<div class="heading light">`+hits[i].title+`</div>`;
+		}
+	});
 }
 
 // BEHAVIOR WHEN SEARCHING ===================================================================
 var intervalID;
 
-function setFocused() {
-	console.log("focused");
-	var results = document.querySelectorAll('.ais-SearchBox-input');
-		for (result of results) {
-			result.classList.toggle('focused');
-			intervalID = setInterval(() => {
-				if(result.value.length > 0){
-					document.getElementById("right").classList.remove("hidden");
-				} else {
-					document.getElementById("right").classList.add("hidden");
-				}
-				console.log("firing");
-			}, 30);
-		}
-	document.getElementById("background").style.opacity = "0.2";
-	document.getElementById("background").style.filter = "blur(5px)";
-}
 
-function unsetFocused() {
 	var results = document.querySelectorAll('.ais-SearchBox-input');
-	
 	for (result of results) {
-		if(result.value === ""){
-			result.classList.toggle('focused');
-			document.getElementById("right").classList.add("hidden");
-			document.getElementById("background").style.opacity = "1.0";
-			document.getElementById("background").style.filter = "blur(0px)";
-		} else {
-			document.getElementById("right").classList.remove("hidden");
-		}
-		clearInterval(intervalID);
+		result.addEventListener("focusin", (e) => {setFocused(e)});
+		result.addEventListener("focusout", (e) => {unsetFocused(e)});
 	}
+
+
+
+function setFocused(e) {
+	var results = document.getElementById("right");
+	var bg = document.getElementById("background");
+	intervalID = setInterval(() => {
+		if(e.target.value.length > 0){
+			results.classList.remove("hidden");
+		} else {
+			results.classList.add("hidden");
+		}
+		console.log("firing");
+	}, 30);
+		
+	bg.style.opacity = "0.2";
+	bg.style.filter = "blur(5px)";
 }
 
-var results = document.querySelectorAll('input[type="search"]');
-for (result of results) {
-  result.addEventListener("focusin", setFocused);
-  result.addEventListener("focusout", unsetFocused);
+function unsetFocused(e) {
+	var results = document.getElementById("right");
+	var bg = document.getElementById("background");
+	
+	if(e.target.value.length <= 0){
+		results.classList.add("hidden");
+		bg.style.opacity = "1.0";
+		bg.style.filter = "blur(0px)";
+	}
+	clearInterval(intervalID);
 }
+
