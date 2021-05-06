@@ -6,18 +6,44 @@
           integrity="sha256-TehzF/2QvNKhGQrrNpoOb2Ck4iGZ1J/DI4pkd2oUsBc=" crossorigin="anonymous">
 
     <base href="algolia" target="_blank">
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
     <title>Algolia</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap" rel="stylesheet">
+	<script src="index.js"></script>
 </head>
-<body>
+<body onload="writeBg()">
+	<!-- <script src="loadBackground.js"></script> -- -->
+	<div id="bg-container"><div id="background"></div></div>
+	<div id = "main-container" class="">
+		<div id="left">
+			<div class="body light">
+				some promo
+			</div>
+			
+			<div id="main-search">
+				<div class="large light">
+					Look into old news —
+				</div>
+				<div class="heading light">
+					Just don't copy it into your paper
+				</div>
+				<div id="searchbox"></div>
+			</div>
+		</div>
+		
+		<div id="right" class="hidden">
+			<div id="hits"></div>
+		</div>
+	</div>
 
-<div id="searchbox"></div>
-
-<div id="hits"></div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.5.1/dist/algoliasearch-lite.umd.js"
         integrity="sha256-EXPXz4W6pQgfYY3yTpnDa3OH8/EPn16ciVsPQ/ypsjk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.8.3/dist/instantsearch.production.min.js"
         integrity="sha256-LAGhRRdtVoD6RLo2qDQsU2mp+XVSciKRC8XPOBWmofM=" crossorigin="anonymous"></script>
-<script src="index.js"></script>
+<script src="startAlgolia.js"></script>
 </html>
